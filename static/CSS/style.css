@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Noto+Serif+Khitan+Small+Script&display=swap");
+
+body {
+  background: url("https://iili.io/dTMrgKx.jpg") fixed center;
+  object-fit: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Noto Serif Khitan Small Script", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.Head {
+  height: fit-content;
+  background: rgba(137, 207, 240, 0.5);
+  font-family: "Baskervville SC", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.current_city {
+  font-size: medium;
+}
+
+.name {
+  padding: 0;
+  margin: 0;
+}
+
+.search-form {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 100px;
+  width: 400px;
+  background: transparent;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 2px -1px 3px 0px rgba(255, 255, 255, 0.6);
+  position: relative;
+  margin: 3em;
+}
+
+input[id="cityName"] {
+  width: 80%;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: inset -2px 1px 3px 0px rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: aliceblue;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.button {
+  border: none;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 3px;
+  margin: 0;
+  background: transparent;
+  box-shadow: 2px -1px 3px 0px rgba(255, 255, 255, 0.6);
+  /* box-shadow: 2px -1px 3px 0px rgb(99, 99, 99); */
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.current {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 250px;
+  width: 420px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10%;
+  padding: 20px;
+  margin: 1em;
+}
+
+.forecast-hour{
+  min-height: 250px;
+  width: 200px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10%;
+  padding: 20px;
+  margin: 1em;
+}
+.time{
+  text-align: center;
+  font-weight: 700;
+}
+
+img[alt="curr_icon"]{
+  height: 25px;
+}

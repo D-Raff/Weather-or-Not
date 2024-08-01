@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/CSS/style.css" />
+    <title>Weather or not</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-fluid d-flex justify-content-center Head">
+      <p class="name">Weather or Not</p>
+      <div class="current_city p-0 m-0">
+        <p class="p-0 m-1 curr" >Current weather in {{ current.name }}: {{ current.description }} <img src="https://openweathermap.org/img/wn/{{ current.icon }}@2x.png" alt="curr_icon" /> | {{ current.wind_speed }} Knots | {{current.curr_temperature}}°C</p>
+      </div>
+    </div>
+    <form action="/" method="post" class="search-form">
+      <input
+        type="text"
+        name="cityName"
+        id="cityName"
+        placeholder="Enter the name of a City"
+        required
+        autocomplete="off"
+      />
+      <button class="button">Get weather</button>
+    </form>
+
+    {% if data %}
+    <div class="current">
+      <p>Weather in {{ data.name }} currently:</p>
+      <p>cloud coverage: {{ data.main }} - {{ data.description }}</p>
+      <img
+        src="https://openweathermap.org/img/wn/{{ data.icon }}@2x.png"
+        alt="icon"
+      />
+      <p>Temperature: {{ data.temperature }}°C</p>
+    </div>
+    {% endif %}
+
+    {% if forecast %}
+    <h2>12 hour forecast for {{ data.name }}</h2>
+      <div class="fore container d-flex flex-wrap m-0 p-0 justify-content-evenly">
+        {% for cast in forecast %}
+          <div class="forecast-hour d-flex flex-column align-items-center">
+            <p class="time">{{ cast.dt_txt }}</p>
+            <p>
+              Cloud Coverage:
+            </p>
+            <p>{{ cast.weather[0].description }}</p>
+            <img src="https://openweathermap.org/img/wn/{{ cast.weather[0].icon }}@2x.png" alt="icon"/>
+            <p>Wind speed: {{ cast.wind.speed }} Knots</p>
+            <p>Temperature</p>
+            <p>Min: {{ cast.main.temp_min }}°C</p>
+            <p>Max: {{ cast.main.temp_max }}°C</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
