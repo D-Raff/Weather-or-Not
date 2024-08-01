@@ -16,26 +16,51 @@ class WeatherData:
     min_temperature: float
     max_temperature: float
     name: str
+    
+def current_city(city_name):        
+    try:
+         response = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={Api_key}&units=metric')
+         response.raise_for_status()  # Raises exception if the response was not successful
+         resp = response.json()
+         current = WeatherData(
+            main = resp.get('weather')[0].get('main'),
+            description = resp.get('weather')[0].get('description'),
+            icon = resp.get('weather')[0].get('icon'),
+            wind_speed = resp.get('wind').get('speed'),
+            curr_temperature = resp.get('main').get('temp'),
+            min_temperature = resp.get('main').get('min_temp'),
+            max_temperature = resp.get('main').get('max_temp'),
+            name = resp.get('name'),
+            )
+         return current
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+         print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+         print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+         print(f"Something went wrong: {err}")
 
-def current_city(city_name):
-    resp = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={Api_key}&units=metric').json()
+# def current_city(city_name):
+#     resp = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={Api_key}&units=metric').json()
         
-    current = WeatherData(
-        main = resp.get('weather')[0].get('main'),
-        description = resp.get('weather')[0].get('description'),
-        icon = resp.get('weather')[0].get('icon'),
-        wind_speed = resp.get('wind').get('speed'),
-        curr_temperature = resp.get('main').get('temp'),
-        min_temperature = resp.get('main').get('min_temp'),
-        max_temperature = resp.get('main').get('max_temp'),
-        name = resp.get('name'),
-    ) 
-    return current
+#     current = WeatherData(
+#         main = resp.get('weather')[0].get('main'),
+#         description = resp.get('weather')[0].get('description'),
+#         icon = resp.get('weather')[0].get('icon'),
+#         wind_speed = resp.get('wind').get('speed'),
+#         curr_temperature = resp.get('main').get('temp'),
+#         min_temperature = resp.get('main').get('min_temp'),
+#         max_temperature = resp.get('main').get('max_temp'),
+#         name = resp.get('name'),
+#     ) 
+#     return current
 
 def get_current(city_name):        
     try:
          response = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={Api_key}&units=metric')
-         response.raise_for_status()  # Raises an exception if the response was not successful
+         response.raise_for_status()  # Raises exception if the response was not successful
          resp = response.json()
          data = WeatherData(
             main = resp.get('weather')[0].get('main'),
@@ -49,7 +74,7 @@ def get_current(city_name):
             )
          return data
     except requests.exceptions.HTTPError as errh:
-         print(f"HTTP Error: {errh}")
+        print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
          print(f"Error Connecting: {errc}")
     except requests.exceptions.Timeout as errt:
@@ -60,8 +85,9 @@ def get_current(city_name):
 
 def get_forecast(city_name):        
     try:
-        resp = requests.get(f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={Api_key}&units=metric').json()
-        forecast = resp
+        resp = requests.get(f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={Api_key}&units=metric')
+        resp.raise_for_status()  # Raises exception if the response was not successful
+        forecast = resp.json()
         hourly_forecast = forecast['list'][:12]
         return hourly_forecast
     except requests.exceptions.HTTPError as errh:
@@ -81,7 +107,7 @@ def index():
         if request.form['cityName']:
             city = request.form['cityName']
             data = get_current(city)
-            # forecast = get_forecast(city)
+            forecast = get_forecast(city)
             print(forecast)
         else: 
             post_e_msg = "Please enter a valid city name"

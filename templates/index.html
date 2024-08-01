@@ -44,7 +44,7 @@
     {% endif %}
 
     {% if forecast %}
-    <h2>12 hour forecast for {{ data.name }}</h2>
+    <h2>hourly forecast for {{ data.name }}</h2>
       <div class="fore container d-flex flex-wrap m-0 p-0 justify-content-evenly">
         {% for cast in forecast %}
           <div class="forecast-hour d-flex flex-column align-items-center">
